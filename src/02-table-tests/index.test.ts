@@ -18,9 +18,9 @@ const testCases = [
 describe('simpleCalculator', () => {
   // Consider to use Jest table tests API to test all cases above
   test.each(testCases)(
-    `should return $expected for $a and $b with action $action`,
+    'should return $expected for $a $action $b',
     ({ a, b, action, expected }) => {
-      expect(simpleCalculator({ a: a, b: b, action: action })).toBe(expected);
+      expect(simpleCalculator({ a, b, action })).toBe(expected);
     },
   );
 });

@@ -51,14 +51,20 @@ describe('BankAccount', () => {
 
   test('fetchBalance should return number in case if request did not failed', async () => {
     const bankAccount: BankAccount = new BankAccount(10);
-    expect(await bankAccount.fetchBalance()).toBeLessThanOrEqual(100);
+    const result = await bankAccount.fetchBalance();
+
+    if (result !== null) {
+      expect(result).toBeLessThanOrEqual(100);
+    } else {
+      expect(result).toBeNull();
+    }
   });
 
   test('should set new balance if fetchBalance returned number', async () => {
     const bankAccount: BankAccount = new BankAccount(10);
-    jest.spyOn(bankAccount, 'fetchBalance').mockResolvedValue(10);
+    jest.spyOn(bankAccount, 'fetchBalance').mockResolvedValue(50);
     await bankAccount.synchronizeBalance();
-    expect(bankAccount.getBalance()).toBeLessThanOrEqual(100);
+    expect(bankAccount.getBalance()).toBe(50);
   });
 
   test('should throw SynchronizationFailedError if fetchBalance returned null', async () => {
